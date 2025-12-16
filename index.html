@@ -24,9 +24,9 @@
             image-rendering: crisp-edges;
         }
         
-        /* Blocky container design */
+        /* Blocky container using @apply */
         .block-container {
-            position: relative;
+            @apply relative;
             clip-path: polygon(
                 0 6px, 6px 6px, 6px 0,
                 calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
@@ -36,16 +36,14 @@
             );
         }
         
-        /* Minecraft button style */
+        /* Minecraft button using @apply */
         .mc-button {
-            position: relative;
+            @apply relative border-[3px] border-black/30 transition-all duration-100;
             background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%);
-            border: 3px solid rgba(0,0,0,0.3);
             box-shadow: 
                 inset 0 3px 0 rgba(255,255,255,0.25),
                 inset 0 -3px 0 rgba(0,0,0,0.25),
                 0 6px 0 rgba(0,0,0,0.3);
-            transition: all 0.1s;
             clip-path: polygon(
                 0 4px, 4px 4px, 4px 0,
                 calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
@@ -56,7 +54,7 @@
         }
         
         .mc-button:hover {
-            transform: translateY(2px);
+            @apply translate-y-0.5;
             box-shadow: 
                 inset 0 3px 0 rgba(255,255,255,0.25),
                 inset 0 -3px 0 rgba(0,0,0,0.25),
@@ -64,24 +62,26 @@
         }
         
         .mc-button:active {
-            transform: translateY(5px);
+            @apply translate-y-[5px];
             box-shadow: 
                 inset 0 2px 0 rgba(255,255,255,0.25),
                 inset 0 -2px 0 rgba(0,0,0,0.25),
                 0 1px 0 rgba(0,0,0,0.3);
         }
         
-        /* Character card hover effect */
+        /* Character card using @apply */
         .character-card {
-            transition: transform 0.3s, border-color 0.3s;
+            @apply transition-all duration-300 hover:-translate-y-2 hover:border-emerald-600;
         }
         
-        .character-card:hover {
-            transform: translateY(-8px);
-            border-color: #10b981;
+        /* Episode badge using @apply */
+        .episode-badge {
+            clip-path: polygon(
+                8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%
+            );
         }
         
-        /* Floating block animation */
+        /* Floating animation */
         @keyframes floatBlock {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
@@ -91,13 +91,7 @@
             animation: floatBlock 3s ease-in-out infinite;
         }
         
-        /* Episode badge */
-        .episode-badge {
-            clip-path: polygon(
-                8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%
-            );
-        }
-        
+        /* Smooth scroll */
         html {
             scroll-behavior: smooth;
         }
@@ -119,13 +113,14 @@
         <div class="absolute inset-0 w-full h-full">
             <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-30">
               <source src="trailer.mp4" type="video/mp4">
-          </video>
+            </video>
         </div>
         
         <!-- Dark overlay -->
-        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="absolute inset-0 bg-black/50"></div>
         
-        <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(106, 76, 48, 0.3) 15px, rgba(106, 76, 48, 0.3) 16px), repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(106, 76, 48, 0.3) 15px, rgba(106, 76, 48, 0.3) 16px);"></div>
+        <!-- Texture pattern -->
+        <div class="absolute inset-0 opacity-5 bg-[repeating-linear-gradient(0deg,transparent,transparent_15px,rgba(106,76,48,0.3)_15px,rgba(106,76,48,0.3)_16px),repeating-linear-gradient(90deg,transparent,transparent_15px,rgba(106,76,48,0.3)_15px,rgba(106,76,48,0.3)_16px)]"></div>
         
         <div class="relative z-10 container mx-auto px-4 text-center">
             <div class="mb-12">
@@ -145,9 +140,6 @@
             <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <button onclick="window.open('https://drive.google.com/file/d/1w_JAg1MhGVVCxo-X8SPPC3ahroipkmg3/view', '_blank')" class="mc-button bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-10 text-base w-64">
                     TONTON TRAILER
-                </button>
-                <button class="mc-button bg-stone-700 hover:bg-stone-800 text-white font-bold py-4 px-10 text-base w-64">
-                    PELAJARI LEBIH LANJUT
                 </button>
             </div>
         </div>
@@ -485,49 +477,40 @@
     </footer>
 
     <script>
-        // Smooth reveal on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        // Smooth reveal on scroll using Intersection Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.remove('opacity-0', 'translate-y-5');
                 }
             });
-        }, observerOptions);
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
-        // Animate cards on scroll
+        // Observe character cards for animation
         document.querySelectorAll('.character-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            el.classList.add('opacity-0', 'translate-y-5', 'transition-all', 'duration-500');
             observer.observe(el);
         });
 
-        // Parallax for floating blocks
+        // Parallax effect for floating blocks
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const blocks = document.querySelectorAll('.float-block');
-            blocks.forEach((block, index) => {
-                const speed = 0.3 + (index * 0.1);
-                block.style.transform = `translateY(${scrolled * speed}px)`;
-            });
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const blocks = document.querySelectorAll('.float-block');
+                    blocks.forEach((block, index) => {
+                        const speed = 0.3 + (index * 0.1);
+                        block.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
-
-        // Button click effect
-        document.querySelectorAll('.mc-button').forEach(button => {
-            button.addEventListener('click', function() {
-                this.style.transform = 'translateY(5px)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 100);
-            });
-        });
-        // CODE BY AGUSTINO BILL GATE
     </script>
 </body>
 </html>
