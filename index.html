@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft: Story Mode - An Interactive Adventure</title>
+    <title>Minecraft: Story Mode - Petualangan Interaktif</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Minecraft-style fonts */
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Lato:wght@400;700;900&display=swap');
         
         * {
@@ -23,6 +24,7 @@
             image-rendering: crisp-edges;
         }
         
+        /* Blocky container design */
         .block-container {
             position: relative;
             clip-path: polygon(
@@ -34,6 +36,7 @@
             );
         }
         
+        /* Minecraft button style */
         .mc-button {
             position: relative;
             background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%);
@@ -68,6 +71,7 @@
                 0 1px 0 rgba(0,0,0,0.3);
         }
         
+        /* Character card hover effect */
         .character-card {
             transition: transform 0.3s, border-color 0.3s;
         }
@@ -77,6 +81,7 @@
             border-color: #10b981;
         }
         
+        /* Floating block animation */
         @keyframes floatBlock {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
@@ -86,6 +91,7 @@
             animation: floatBlock 3s ease-in-out infinite;
         }
         
+        /* Episode badge */
         .episode-badge {
             clip-path: polygon(
                 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%
@@ -98,6 +104,8 @@
     </style>
 </head>
 <body class="bg-black text-white overflow-x-hidden">
+    
+    <!-- Decorative floating blocks -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-10">
         <div class="absolute top-20 left-10 w-12 h-12 bg-emerald-700 float-block" style="animation-delay: 0s;"></div>
         <div class="absolute top-40 right-20 w-10 h-10 bg-amber-800 float-block" style="animation-delay: 0.8s;"></div>
@@ -105,7 +113,22 @@
         <div class="absolute bottom-32 right-1/3 w-12 h-12 bg-gray-700 float-block" style="animation-delay: 2.4s;"></div>
     </div>
 
-    <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 via-gray-900 to-black">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 via-gray-900 to-black overflow-hidden">
+        <!-- Video Background -->
+        <div class="absolute inset-0 w-full h-full">
+            <iframe 
+                src="https://drive.google.com/file/d/1w_JAg1MhGVVCxo-X8SPPC3ahroipkmg3/preview" 
+                class="absolute inset-0 w-full h-full pointer-events-none"
+                style="transform: scale(1.5); opacity: 0.4; filter: brightness(0.7);"
+                allow="autoplay"
+                frameborder="0"
+            ></iframe>
+        </div>
+        
+        <!-- Dark overlay -->
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        
         <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(106, 76, 48, 0.3) 15px, rgba(106, 76, 48, 0.3) 16px), repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(106, 76, 48, 0.3) 15px, rgba(106, 76, 48, 0.3) 16px);"></div>
         
         <div class="relative z-10 container mx-auto px-4 text-center">
@@ -116,141 +139,150 @@
             </div>
             
             <p class="text-xl md:text-2xl text-emerald-400 mb-6 max-w-3xl mx-auto font-bold">
-                AN INTERACTIVE ADVENTURE
+                PETUALANGAN INTERAKTIF
             </p>
             
             <p class="text-base md:text-lg mb-12 max-w-2xl mx-auto text-gray-300 leading-relaxed">
-                When a dangerous Wither Storm threatens the world, you and your friends must embark on an epic quest to find the legendary Order of the Stone and save everything you know.
+                Ketika Wither Storm yang berbahaya mengancam dunia, kamu dan teman-temanmu harus memulai pencarian epik untuk menemukan Order of the Stone legendaris dan menyelamatkan segalanya.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <button class="mc-button bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-10 text-base w-64">
-                    WATCH TRAILER
+                    TONTON TRAILER
                 </button>
                 <button class="mc-button bg-stone-700 hover:bg-stone-800 text-white font-bold py-4 px-10 text-base w-64">
-                    LEARN MORE
+                    PELAJARI LEBIH LANJUT
                 </button>
             </div>
         </div>
     </section>
 
+    <!-- Story Section -->
     <section class="bg-stone-900 py-20">
         <div class="container mx-auto px-4">
             <h2 class="text-2xl md:text-3xl font-black text-center mb-12 text-yellow-400">
-                THE ADVENTURE
+                PETUALANGAN
             </h2>
             
             <div class="max-w-5xl mx-auto">
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-8 md:p-12 mb-12">
                     <p class="text-lg leading-relaxed mb-6 text-gray-200">
-                        <span class="text-yellow-300 font-bold">In the world of Minecraft,</span> legends speak of the Order of the Stone—five heroes who defeated the legendary Ender Dragon and saved the Overworld. But those heroes are long gone, and new threats emerge from the shadows.
+                        <span class="text-yellow-300 font-bold">Di dunia Minecraft,</span> legenda menceritakan tentang Order of the Stone—lima pahlawan yang mengalahkan Ender Dragon legendaris dan menyelamatkan Overworld. Tapi para pahlawan itu sudah lama hilang, dan ancaman baru muncul dari kegelapan.
                     </p>
                     <p class="text-lg leading-relaxed text-gray-200">
-                        When a dangerous experiment goes wrong at EnderCon, a monstrous Wither Storm is unleashed upon the world. <span class="text-emerald-400 font-bold">Jesse</span> and their friends must embark on a perilous journey to find the Order of the Stone and discover the secret to destroying the beast before it consumes everything in its path.
+                        Ketika eksperimen berbahaya gagal di EnderCon, Wither Storm yang mengerikan dilepaskan ke dunia. <span class="text-emerald-400 font-bold">Jesse</span> dan teman-temannya harus memulai perjalanan berbahaya untuk menemukan Order of the Stone dan menemukan rahasia untuk menghancurkan monster sebelum ia melahap segalanya.
                     </p>
                 </div>
                 
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="block-container bg-stone-700 border-4 border-stone-600 p-6">
                         <div class="w-16 h-16 bg-red-800 mb-4 block-container mx-auto"></div>
-                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">EPIC QUEST</h3>
-                        <p class="text-gray-300 text-center">Journey through multiple dimensions to save the world</p>
+                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">PENCARIAN EPIK</h3>
+                        <p class="text-gray-300 text-center">Jelajahi berbagai dimensi untuk menyelamatkan dunia</p>
                     </div>
                     <div class="block-container bg-stone-700 border-4 border-stone-600 p-6">
                         <div class="w-16 h-16 bg-blue-700 mb-4 block-container mx-auto"></div>
-                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">YOUR CHOICES</h3>
-                        <p class="text-gray-300 text-center">Every decision shapes the story and its outcome</p>
+                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">PILIHANMU PENTING</h3>
+                        <p class="text-gray-300 text-center">Setiap keputusan membentuk cerita dan hasilnya</p>
                     </div>
                     <div class="block-container bg-stone-700 border-4 border-stone-600 p-6">
                         <div class="w-16 h-16 bg-emerald-700 mb-4 block-container mx-auto"></div>
-                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">RICH CHARACTERS</h3>
-                        <p class="text-gray-300 text-center">Meet unique heroes with their own stories</p>
+                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">KARAKTER BERKESAN</h3>
+                        <p class="text-gray-300 text-center">Temui pahlawan unik dengan cerita mereka sendiri</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Characters Section -->
     <section class="bg-gray-900 py-20">
         <div class="container mx-auto px-4">
             <h2 class="text-2xl md:text-3xl font-black text-center mb-6 text-emerald-400">
-                THE HEROES
+                PARA PAHLAWAN
             </h2>
             <p class="text-center text-gray-300 mb-16 max-w-2xl mx-auto">
-                Meet Jesse and the friends who will stand by your side through every challenge.
+                Temui Jesse dan teman-teman yang akan berdiri di sisimu melalui setiap tantangan.
             </p>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <!-- Jesse -->
                 <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
                     <div class="w-20 h-20 bg-orange-700 mb-4 block-container mx-auto"></div>
                     <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">JESSE</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm">An everyday hero thrust into an extraordinary adventure. Brave, loyal, and determined to save the world.</p>
-                    <div class="text-xs text-orange-300 font-bold text-center">THE LEADER</div>
+                    <p class="text-gray-300 mb-4 text-center text-sm">Pahlawan biasa yang terdorong ke petualangan luar biasa. Berani, setia, dan bertekad menyelamatkan dunia.</p>
+                    <div class="text-xs text-orange-300 font-bold text-center">SANG PEMIMPIN</div>
                 </div>
                 
+                <!-- Petra -->
                 <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
                     <div class="w-20 h-20 bg-red-700 mb-4 block-container mx-auto"></div>
                     <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">PETRA</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm">A tough, shrewd adventurer with a mysterious past. She's protective and never backs down from a fight.</p>
-                    <div class="text-xs text-red-300 font-bold text-center">THE WARRIOR</div>
+                    <p class="text-gray-300 mb-4 text-center text-sm">Petualang tangguh dan cerdik dengan masa lalu misterius. Ia protektif dan tidak pernah mundur dari pertarungan.</p>
+                    <div class="text-xs text-red-300 font-bold text-center">SANG PEJUANG</div>
                 </div>
                 
+                <!-- Axel -->
                 <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
                     <div class="w-20 h-20 bg-emerald-700 mb-4 block-container mx-auto"></div>
                     <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">AXEL</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm">Impulsive and speaks his mind, but fiercely loyal. Always ready to stand by Jesse's side through thick and thin.</p>
-                    <div class="text-xs text-emerald-300 font-bold text-center">THE LOYAL FRIEND</div>
+                    <p class="text-gray-300 mb-4 text-center text-sm">Impulsif dan blak-blakan, tapi sangat setia. Selalu siap berdiri di samping Jesse dalam suka dan duka.</p>
+                    <div class="text-xs text-emerald-300 font-bold text-center">SAHABAT SETIA</div>
                 </div>
                 
+                <!-- Lukas -->
                 <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
                     <div class="w-20 h-20 bg-blue-700 mb-4 block-container mx-auto"></div>
                     <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">LUKAS</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm">Once leader of the Ocelots, now a valued member of Jesse's crew. A writer and architect with a brave heart.</p>
-                    <div class="text-xs text-blue-300 font-bold text-center">THE STORYTELLER</div>
+                    <p class="text-gray-300 mb-4 text-center text-sm">Dulunya pemimpin Ocelots, kini anggota berharga tim Jesse. Penulis dan arsitek dengan hati yang berani.</p>
+                    <div class="text-xs text-blue-300 font-bold text-center">SANG PENCERITA</div>
                 </div>
             </div>
             
+            <!-- Order of the Stone -->
             <div class="mt-20">
                 <h3 class="text-xl md:text-2xl font-black text-center mb-12 text-amber-400">
                     THE ORDER OF THE STONE
                 </h3>
                 <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">
-                    The legendary heroes who once saved the world. Can they do it again?
+                    Para pahlawan legendaris yang pernah menyelamatkan dunia. Bisakah mereka melakukannya lagi?
                 </p>
                 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
                     <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
                         <div class="w-16 h-16 bg-yellow-700 mb-3 block-container mx-auto"></div>
                         <h4 class="text-base font-bold mb-2 text-yellow-300">GABRIEL</h4>
-                        <p class="text-sm text-gray-300">The Warrior</p>
+                        <p class="text-sm text-gray-300">Sang Pejuang</p>
                     </div>
                     <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
                         <div class="w-16 h-16 bg-red-700 mb-3 block-container mx-auto"></div>
                         <h4 class="text-base font-bold mb-2 text-yellow-300">ELLEGAARD</h4>
-                        <p class="text-sm text-gray-300">The Engineer</p>
+                        <p class="text-sm text-gray-300">Sang Insinyur</p>
                     </div>
                     <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
                         <div class="w-16 h-16 bg-orange-700 mb-3 block-container mx-auto"></div>
                         <h4 class="text-base font-bold mb-2 text-yellow-300">MAGNUS</h4>
-                        <p class="text-sm text-gray-300">The Rogue</p>
+                        <p class="text-sm text-gray-300">Sang Pemberontak</p>
                     </div>
                     <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
                         <div class="w-16 h-16 bg-purple-800 mb-3 block-container mx-auto"></div>
                         <h4 class="text-base font-bold mb-2 text-yellow-300">IVOR</h4>
-                        <p class="text-sm text-gray-300">The Enchanter</p>
+                        <p class="text-sm text-gray-300">Sang Penyihir</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Episodes Section -->
     <section class="bg-stone-900 py-20">
         <div class="container mx-auto px-4">
             <h2 class="text-2xl md:text-3xl font-black text-center mb-12 text-red-400">
-                THE EPISODES
+                EPISODE
             </h2>
             
             <div class="max-w-5xl mx-auto space-y-6">
+                <!-- Episode 1 -->
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
                     <div class="flex items-start gap-4 md:gap-6">
                         <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
@@ -258,11 +290,12 @@
                         </div>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">THE ORDER OF THE STONE</h3>
-                            <p class="text-gray-300">When a dangerous experiment goes wrong at EnderCon, Jesse and friends must find the legendary Order of the Stone to stop the Wither Storm.</p>
+                            <p class="text-gray-300">Ketika eksperimen berbahaya gagal di EnderCon, Jesse dan teman-temannya harus menemukan Order of the Stone legendaris untuk menghentikan Wither Storm.</p>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Episode 2 -->
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
                     <div class="flex items-start gap-4 md:gap-6">
                         <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
@@ -270,11 +303,12 @@
                         </div>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">ASSEMBLY REQUIRED</h3>
-                            <p class="text-gray-300">Race to find the remaining members of the Order before the Wither Storm's destruction spreads across the land. Time is running out.</p>
+                            <p class="text-gray-300">Berlomba untuk menemukan anggota Order yang tersisa sebelum kehancuran Wither Storm menyebar ke seluruh negeri. Waktu hampir habis.</p>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Episode 3 -->
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
                     <div class="flex items-start gap-4 md:gap-6">
                         <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
@@ -282,11 +316,12 @@
                         </div>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">THE LAST PLACE YOU LOOK</h3>
-                            <p class="text-gray-300">Discover the truth about the Order of the Stone. Uncovering the secret to defeating the Wither Storm may be the greatest challenge yet.</p>
+                            <p class="text-gray-300">Temukan kebenaran tentang Order of the Stone. Mengungkap rahasia mengalahkan Wither Storm mungkin menjadi tantangan terbesar.</p>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Episode 4 -->
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
                     <div class="flex items-start gap-4 md:gap-6">
                         <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
@@ -294,11 +329,12 @@
                         </div>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">A BLOCK AND A HARD PLACE</h3>
-                            <p class="text-gray-300">The final confrontation arrives. Jesse and friends must make the ultimate sacrifice to save the world and become true heroes.</p>
+                            <p class="text-gray-300">Konfrontasi terakhir tiba. Jesse dan teman-temannya harus membuat pengorbanan tertinggi untuk menyelamatkan dunia dan menjadi pahlawan sejati.</p>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Episode 5 -->
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
                     <div class="flex items-start gap-4 md:gap-6">
                         <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
@@ -306,7 +342,7 @@
                         </div>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">ORDER UP</h3>
-                            <p class="text-gray-300">With the Wither Storm defeated, the New Order faces celebrity status and new adventures. But peace never lasts long...</p>
+                            <p class="text-gray-300">Dengan Wither Storm yang terkalahkan, New Order menghadapi status selebriti dan petualangan baru. Tapi kedamaian tidak pernah berlangsung lama...</p>
                         </div>
                     </div>
                 </div>
@@ -314,97 +350,101 @@
             
             <div class="text-center mt-12">
                 <p class="text-yellow-400 font-bold">+ ADVENTURE PASS EPISODES</p>
-                <p class="text-gray-400 text-sm mt-2">Continue the story with additional episodes</p>
+                <p class="text-gray-400 text-sm mt-2">Lanjutkan cerita dengan episode tambahan</p>
             </div>
         </div>
     </section>
 
+    <!-- World Section -->
     <section class="bg-gray-900 py-20">
         <div class="container mx-auto px-4">
             <h2 class="text-2xl md:text-3xl font-black text-center mb-12 text-cyan-400">
-                EXPLORE THE WORLDS
+                JELAJAHI DUNIA
             </h2>
             
             <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
                     <div class="w-16 h-16 bg-emerald-700 mb-4 block-container"></div>
                     <h3 class="text-xl font-bold mb-4 text-yellow-300">THE OVERWORLD</h3>
-                    <p class="text-gray-300">From peaceful villages to dangerous caves, explore the vast landscapes where your adventure begins.</p>
+                    <p class="text-gray-300">Dari desa damai hingga gua berbahaya, jelajahi lanskap luas di mana petualanganmu dimulai.</p>
                 </div>
                 
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
                     <div class="w-16 h-16 bg-red-800 mb-4 block-container"></div>
                     <h3 class="text-xl font-bold mb-4 text-yellow-300">THE NETHER</h3>
-                    <p class="text-gray-300">Venture into the fiery depths where lava flows and deadly creatures lurk in every shadow.</p>
+                    <p class="text-gray-300">Masuki kedalaman berapi di mana lava mengalir dan makhluk mematikan mengintai di setiap bayangan.</p>
                 </div>
                 
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
                     <div class="w-16 h-16 bg-purple-800 mb-4 block-container"></div>
                     <h3 class="text-xl font-bold mb-4 text-yellow-300">THE END</h3>
-                    <p class="text-gray-300">Journey to the mysterious End dimension, home of the legendary Ender Dragon.</p>
+                    <p class="text-gray-300">Perjalanan ke dimensi End yang misterius, rumah dari Ender Dragon legendaris.</p>
                 </div>
                 
                 <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
                     <div class="w-16 h-16 bg-blue-700 mb-4 block-container"></div>
                     <h3 class="text-xl font-bold mb-4 text-yellow-300">PORTAL WORLDS</h3>
-                    <p class="text-gray-300">Discover hidden portal worlds with unique challenges. Adventure awaits beyond every portal.</p>
+                    <p class="text-gray-300">Temukan dunia portal tersembunyi dengan tantangan unik. Petualangan menanti di balik setiap portal.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Choices Section -->
     <section class="bg-stone-900 py-20">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-2xl md:text-3xl font-black mb-12 text-purple-400">
-                YOUR STORY, YOUR WAY
+                CERITAMU, JALANMU
             </h2>
             
             <div class="max-w-4xl mx-auto block-container bg-stone-800 border-4 border-stone-700 p-8 md:p-12 mb-12">
                 <div class="w-20 h-20 bg-purple-700 mb-6 block-container mx-auto"></div>
                 <p class="text-lg md:text-xl mb-8 text-gray-200">
-                    Every choice you make shapes the story. Who will you save? Who will you trust? The fate of your friends and the entire world rests in your hands.
+                    Setiap pilihan yang kamu buat membentuk cerita. Siapa yang akan kamu selamatkan? Siapa yang akan kamu percayai? Nasib teman-temanmu dan seluruh dunia ada di tanganmu.
                 </p>
                 <div class="grid md:grid-cols-3 gap-6 text-left">
                     <div>
-                        <div class="text-yellow-400 font-bold mb-2">QUICK DECISIONS</div>
-                        <p class="text-sm text-gray-300">Choose quickly in intense moments</p>
+                        <div class="text-yellow-400 font-bold mb-2">KEPUTUSAN CEPAT</div>
+                        <p class="text-sm text-gray-300">Pilih dengan cepat di momen yang intens</p>
                     </div>
                     <div>
-                        <div class="text-yellow-400 font-bold mb-2">MORAL DILEMMAS</div>
-                        <p class="text-sm text-gray-300">Face tough choices with no clear answer</p>
+                        <div class="text-yellow-400 font-bold mb-2">DILEMA MORAL</div>
+                        <p class="text-sm text-gray-300">Hadapi pilihan sulit tanpa jawaban yang jelas</p>
                     </div>
                     <div>
-                        <div class="text-yellow-400 font-bold mb-2">CONSEQUENCES</div>
-                        <p class="text-sm text-gray-300">Your decisions echo throughout the story</p>
+                        <div class="text-yellow-400 font-bold mb-2">KONSEKUENSI</div>
+                        <p class="text-sm text-gray-300">Keputusanmu bergema di seluruh cerita</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CTA Section -->
     <section class="bg-gradient-to-b from-gray-900 to-black py-20">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl md:text-4xl font-black mb-6 text-white">
-                BEGIN YOUR ADVENTURE
+                MULAI PETUALANGANMU
             </h2>
             
             <p class="text-lg md:text-xl mb-12 text-gray-300 max-w-3xl mx-auto">
-                The world needs heroes. The Order of the Stone is calling. Will you answer?
+                Dunia membutuhkan pahlawan. Order of the Stone memanggil. Apakah kamu akan menjawabnya?
             </p>
             
             <button class="mc-button bg-emerald-600 hover:bg-emerald-700 text-white font-black py-6 px-16 text-lg">
-                PLAY NOW
+                MAINKAN SEKARANG
             </button>
             
-            <p class="text-xs text-gray-500 mt-8">Available on PC, Console, Mobile, and Netflix Interactive</p>
+            <p class="text-xs text-gray-500 mt-8">Tersedia di PC, Console, Mobile, dan Netflix Interactive</p>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-black border-t-4 border-stone-800 py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <h4 class="font-bold text-sm mb-4 text-yellow-400">ABOUT</h4>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">TENTANG</h4>
                     <ul class="space-y-2 text-xs text-gray-400">
                         <li><a href="#" class="hover:text-white">Story Mode Wiki</a></li>
                         <li><a href="#" class="hover:text-white">Telltale Games</a></li>
@@ -412,7 +452,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-sm mb-4 text-yellow-400">EPISODES</h4>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">EPISODE</h4>
                     <ul class="space-y-2 text-xs text-gray-400">
                         <li><a href="#" class="hover:text-white">Season One</a></li>
                         <li><a href="#" class="hover:text-white">Adventure Pass</a></li>
@@ -420,35 +460,36 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-sm mb-4 text-yellow-400">COMMUNITY</h4>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">KOMUNITAS</h4>
                     <ul class="space-y-2 text-xs text-gray-400">
-                        <li><a href="#" class="hover:text-white">Forums</a></li>
+                        <li><a href="#" class="hover:text-white">Forum</a></li>
                         <li><a href="#" class="hover:text-white">Fan Art</a></li>
                         <li><a href="#" class="hover:text-white">Discord</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-sm mb-4 text-yellow-400">SUPPORT</h4>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">BANTUAN</h4>
                     <ul class="space-y-2 text-xs text-gray-400">
-                        <li><a href="#" class="hover:text-white">Help Center</a></li>
-                        <li><a href="#" class="hover:text-white">FAQs</a></li>
-                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                        <li><a href="#" class="hover:text-white">Pusat Bantuan</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">Kontak</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="border-t border-stone-800 pt-8 text-center">
                 <p class="text-xs text-gray-500 mb-2">
-                    © 2015-2025 Telltale Games and Mojang AB. Minecraft: Story Mode is a trademark of Mojang AB.
+                    © 2015-2025 Telltale Games dan Mojang AB. Minecraft: Story Mode adalah merek dagang Mojang AB.
                 </p>
                 <p class="text-xs text-gray-600">
-                    This is a fan-made tribute page. All rights reserved to their respective owners.
+                    Ini adalah halaman tribute buatan penggemar. Semua hak dilindungi oleh pemiliknya masing-masing.
                 </p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Smooth reveal on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -463,6 +504,7 @@
             });
         }, observerOptions);
 
+        // Animate cards on scroll
         document.querySelectorAll('.character-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(20px)';
@@ -470,6 +512,7 @@
             observer.observe(el);
         });
 
+        // Parallax for floating blocks
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const blocks = document.querySelectorAll('.float-block');
@@ -479,6 +522,7 @@
             });
         });
 
+        // Button click effect
         document.querySelectorAll('.mc-button').forEach(button => {
             button.addEventListener('click', function() {
                 this.style.transform = 'translateY(5px)';
