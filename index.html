@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft: Story Mode - An Interactive Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Lato:wght@400;700;900&display=swap');
+        
+        * {
+            font-family: 'Lato', sans-serif;
+        }
+        
+        h1, h2, h3, .minecraft-font {
+            font-family: 'Press Start 2P', monospace;
+            letter-spacing: 1px;
+        }
+        
+        body {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        .block-container {
+            position: relative;
+            clip-path: polygon(
+                0 6px, 6px 6px, 6px 0,
+                calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
+                100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px),
+                calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 6px),
+                0 calc(100% - 6px)
+            );
+        }
+        
+        .mc-button {
+            position: relative;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%);
+            border: 3px solid rgba(0,0,0,0.3);
+            box-shadow: 
+                inset 0 3px 0 rgba(255,255,255,0.25),
+                inset 0 -3px 0 rgba(0,0,0,0.25),
+                0 6px 0 rgba(0,0,0,0.3);
+            transition: all 0.1s;
+            clip-path: polygon(
+                0 4px, 4px 4px, 4px 0,
+                calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+                100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
+                calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px),
+                0 calc(100% - 4px)
+            );
+        }
+        
+        .mc-button:hover {
+            transform: translateY(2px);
+            box-shadow: 
+                inset 0 3px 0 rgba(255,255,255,0.25),
+                inset 0 -3px 0 rgba(0,0,0,0.25),
+                0 4px 0 rgba(0,0,0,0.3);
+        }
+        
+        .mc-button:active {
+            transform: translateY(5px);
+            box-shadow: 
+                inset 0 2px 0 rgba(255,255,255,0.25),
+                inset 0 -2px 0 rgba(0,0,0,0.25),
+                0 1px 0 rgba(0,0,0,0.3);
+        }
+        
+        .character-card {
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-8px);
+            border-color: #10b981;
+        }
+        
+        @keyframes floatBlock {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .float-block {
+            animation: floatBlock 3s ease-in-out infinite;
+        }
+        
+        .episode-badge {
+            clip-path: polygon(
+                8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%
+            );
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-10">
+        <div class="absolute top-20 left-10 w-12 h-12 bg-emerald-700 float-block" style="animation-delay: 0s;"></div>
+        <div class="absolute top-40 right-20 w-10 h-10 bg-amber-800 float-block" style="animation-delay: 0.8s;"></div>
+        <div class="absolute bottom-40 left-1/4 w-14 h-14 bg-stone-600 float-block" style="animation-delay: 1.6s;"></div>
+        <div class="absolute bottom-32 right-1/3 w-12 h-12 bg-gray-700 float-block" style="animation-delay: 2.4s;"></div>
+    </div>
+
+    <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 via-gray-900 to-black">
+        <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(106, 76, 48, 0.3) 15px, rgba(106, 76, 48, 0.3) 16px), repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(106, 76, 48, 0.3) 15px, rgba(106, 76, 48, 0.3) 16px);"></div>
+        
+        <div class="relative z-10 container mx-auto px-4 text-center">
+            <div class="mb-12">
+                <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                    MINECRAFT<br>STORY MODE
+                </h1>
+            </div>
+            
+            <p class="text-xl md:text-2xl text-emerald-400 mb-6 max-w-3xl mx-auto font-bold">
+                AN INTERACTIVE ADVENTURE
+            </p>
+            
+            <p class="text-base md:text-lg mb-12 max-w-2xl mx-auto text-gray-300 leading-relaxed">
+                When a dangerous Wither Storm threatens the world, you and your friends must embark on an epic quest to find the legendary Order of the Stone and save everything you know.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button class="mc-button bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-10 text-base w-64">
+                    WATCH TRAILER
+                </button>
+                <button class="mc-button bg-stone-700 hover:bg-stone-800 text-white font-bold py-4 px-10 text-base w-64">
+                    LEARN MORE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-stone-900 py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-black text-center mb-12 text-yellow-400">
+                THE ADVENTURE
+            </h2>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-8 md:p-12 mb-12">
+                    <p class="text-lg leading-relaxed mb-6 text-gray-200">
+                        <span class="text-yellow-300 font-bold">In the world of Minecraft,</span> legends speak of the Order of the Stone—five heroes who defeated the legendary Ender Dragon and saved the Overworld. But those heroes are long gone, and new threats emerge from the shadows.
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-200">
+                        When a dangerous experiment goes wrong at EnderCon, a monstrous Wither Storm is unleashed upon the world. <span class="text-emerald-400 font-bold">Jesse</span> and their friends must embark on a perilous journey to find the Order of the Stone and discover the secret to destroying the beast before it consumes everything in its path.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="block-container bg-stone-700 border-4 border-stone-600 p-6">
+                        <div class="w-16 h-16 bg-red-800 mb-4 block-container mx-auto"></div>
+                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">EPIC QUEST</h3>
+                        <p class="text-gray-300 text-center">Journey through multiple dimensions to save the world</p>
+                    </div>
+                    <div class="block-container bg-stone-700 border-4 border-stone-600 p-6">
+                        <div class="w-16 h-16 bg-blue-700 mb-4 block-container mx-auto"></div>
+                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">YOUR CHOICES</h3>
+                        <p class="text-gray-300 text-center">Every decision shapes the story and its outcome</p>
+                    </div>
+                    <div class="block-container bg-stone-700 border-4 border-stone-600 p-6">
+                        <div class="w-16 h-16 bg-emerald-700 mb-4 block-container mx-auto"></div>
+                        <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">RICH CHARACTERS</h3>
+                        <p class="text-gray-300 text-center">Meet unique heroes with their own stories</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-900 py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-black text-center mb-6 text-emerald-400">
+                THE HEROES
+            </h2>
+            <p class="text-center text-gray-300 mb-16 max-w-2xl mx-auto">
+                Meet Jesse and the friends who will stand by your side through every challenge.
+            </p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
+                    <div class="w-20 h-20 bg-orange-700 mb-4 block-container mx-auto"></div>
+                    <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">JESSE</h3>
+                    <p class="text-gray-300 mb-4 text-center text-sm">An everyday hero thrust into an extraordinary adventure. Brave, loyal, and determined to save the world.</p>
+                    <div class="text-xs text-orange-300 font-bold text-center">THE LEADER</div>
+                </div>
+                
+                <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
+                    <div class="w-20 h-20 bg-red-700 mb-4 block-container mx-auto"></div>
+                    <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">PETRA</h3>
+                    <p class="text-gray-300 mb-4 text-center text-sm">A tough, shrewd adventurer with a mysterious past. She's protective and never backs down from a fight.</p>
+                    <div class="text-xs text-red-300 font-bold text-center">THE WARRIOR</div>
+                </div>
+                
+                <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
+                    <div class="w-20 h-20 bg-emerald-700 mb-4 block-container mx-auto"></div>
+                    <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">AXEL</h3>
+                    <p class="text-gray-300 mb-4 text-center text-sm">Impulsive and speaks his mind, but fiercely loyal. Always ready to stand by Jesse's side through thick and thin.</p>
+                    <div class="text-xs text-emerald-300 font-bold text-center">THE LOYAL FRIEND</div>
+                </div>
+                
+                <div class="character-card block-container bg-stone-800 border-4 border-stone-700 p-6">
+                    <div class="w-20 h-20 bg-blue-700 mb-4 block-container mx-auto"></div>
+                    <h3 class="text-lg font-bold mb-3 text-yellow-300 text-center">LUKAS</h3>
+                    <p class="text-gray-300 mb-4 text-center text-sm">Once leader of the Ocelots, now a valued member of Jesse's crew. A writer and architect with a brave heart.</p>
+                    <div class="text-xs text-blue-300 font-bold text-center">THE STORYTELLER</div>
+                </div>
+            </div>
+            
+            <div class="mt-20">
+                <h3 class="text-xl md:text-2xl font-black text-center mb-12 text-amber-400">
+                    THE ORDER OF THE STONE
+                </h3>
+                <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">
+                    The legendary heroes who once saved the world. Can they do it again?
+                </p>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                    <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
+                        <div class="w-16 h-16 bg-yellow-700 mb-3 block-container mx-auto"></div>
+                        <h4 class="text-base font-bold mb-2 text-yellow-300">GABRIEL</h4>
+                        <p class="text-sm text-gray-300">The Warrior</p>
+                    </div>
+                    <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
+                        <div class="w-16 h-16 bg-red-700 mb-3 block-container mx-auto"></div>
+                        <h4 class="text-base font-bold mb-2 text-yellow-300">ELLEGAARD</h4>
+                        <p class="text-sm text-gray-300">The Engineer</p>
+                    </div>
+                    <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
+                        <div class="w-16 h-16 bg-orange-700 mb-3 block-container mx-auto"></div>
+                        <h4 class="text-base font-bold mb-2 text-yellow-300">MAGNUS</h4>
+                        <p class="text-sm text-gray-300">The Rogue</p>
+                    </div>
+                    <div class="block-container bg-stone-700 border-4 border-stone-600 p-6 text-center">
+                        <div class="w-16 h-16 bg-purple-800 mb-3 block-container mx-auto"></div>
+                        <h4 class="text-base font-bold mb-2 text-yellow-300">IVOR</h4>
+                        <p class="text-sm text-gray-300">The Enchanter</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-stone-900 py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-black text-center mb-12 text-red-400">
+                THE EPISODES
+            </h2>
+            
+            <div class="max-w-5xl mx-auto space-y-6">
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
+                    <div class="flex items-start gap-4 md:gap-6">
+                        <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            01
+                        </div>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">THE ORDER OF THE STONE</h3>
+                            <p class="text-gray-300">When a dangerous experiment goes wrong at EnderCon, Jesse and friends must find the legendary Order of the Stone to stop the Wither Storm.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
+                    <div class="flex items-start gap-4 md:gap-6">
+                        <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            02
+                        </div>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">ASSEMBLY REQUIRED</h3>
+                            <p class="text-gray-300">Race to find the remaining members of the Order before the Wither Storm's destruction spreads across the land. Time is running out.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
+                    <div class="flex items-start gap-4 md:gap-6">
+                        <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            03
+                        </div>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">THE LAST PLACE YOU LOOK</h3>
+                            <p class="text-gray-300">Discover the truth about the Order of the Stone. Uncovering the secret to defeating the Wither Storm may be the greatest challenge yet.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
+                    <div class="flex items-start gap-4 md:gap-6">
+                        <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            04
+                        </div>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">A BLOCK AND A HARD PLACE</h3>
+                            <p class="text-gray-300">The final confrontation arrives. Jesse and friends must make the ultimate sacrifice to save the world and become true heroes.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-6 md:p-8 hover:border-emerald-600 transition-all cursor-pointer">
+                    <div class="flex items-start gap-4 md:gap-6">
+                        <div class="episode-badge bg-amber-500 text-gray-900 font-bold text-lg w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            05
+                        </div>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-2 text-yellow-300">ORDER UP</h3>
+                            <p class="text-gray-300">With the Wither Storm defeated, the New Order faces celebrity status and new adventures. But peace never lasts long...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-yellow-400 font-bold">+ ADVENTURE PASS EPISODES</p>
+                <p class="text-gray-400 text-sm mt-2">Continue the story with additional episodes</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-900 py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-black text-center mb-12 text-cyan-400">
+                EXPLORE THE WORLDS
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
+                    <div class="w-16 h-16 bg-emerald-700 mb-4 block-container"></div>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-300">THE OVERWORLD</h3>
+                    <p class="text-gray-300">From peaceful villages to dangerous caves, explore the vast landscapes where your adventure begins.</p>
+                </div>
+                
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
+                    <div class="w-16 h-16 bg-red-800 mb-4 block-container"></div>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-300">THE NETHER</h3>
+                    <p class="text-gray-300">Venture into the fiery depths where lava flows and deadly creatures lurk in every shadow.</p>
+                </div>
+                
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
+                    <div class="w-16 h-16 bg-purple-800 mb-4 block-container"></div>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-300">THE END</h3>
+                    <p class="text-gray-300">Journey to the mysterious End dimension, home of the legendary Ender Dragon.</p>
+                </div>
+                
+                <div class="block-container bg-stone-800 border-4 border-stone-700 p-8">
+                    <div class="w-16 h-16 bg-blue-700 mb-4 block-container"></div>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-300">PORTAL WORLDS</h3>
+                    <p class="text-gray-300">Discover hidden portal worlds with unique challenges. Adventure awaits beyond every portal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-stone-900 py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-black mb-12 text-purple-400">
+                YOUR STORY, YOUR WAY
+            </h2>
+            
+            <div class="max-w-4xl mx-auto block-container bg-stone-800 border-4 border-stone-700 p-8 md:p-12 mb-12">
+                <div class="w-20 h-20 bg-purple-700 mb-6 block-container mx-auto"></div>
+                <p class="text-lg md:text-xl mb-8 text-gray-200">
+                    Every choice you make shapes the story. Who will you save? Who will you trust? The fate of your friends and the entire world rests in your hands.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div>
+                        <div class="text-yellow-400 font-bold mb-2">QUICK DECISIONS</div>
+                        <p class="text-sm text-gray-300">Choose quickly in intense moments</p>
+                    </div>
+                    <div>
+                        <div class="text-yellow-400 font-bold mb-2">MORAL DILEMMAS</div>
+                        <p class="text-sm text-gray-300">Face tough choices with no clear answer</p>
+                    </div>
+                    <div>
+                        <div class="text-yellow-400 font-bold mb-2">CONSEQUENCES</div>
+                        <p class="text-sm text-gray-300">Your decisions echo throughout the story</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gradient-to-b from-gray-900 to-black py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-6 text-white">
+                BEGIN YOUR ADVENTURE
+            </h2>
+            
+            <p class="text-lg md:text-xl mb-12 text-gray-300 max-w-3xl mx-auto">
+                The world needs heroes. The Order of the Stone is calling. Will you answer?
+            </p>
+            
+            <button class="mc-button bg-emerald-600 hover:bg-emerald-700 text-white font-black py-6 px-16 text-lg">
+                PLAY NOW
+            </button>
+            
+            <p class="text-xs text-gray-500 mt-8">Available on PC, Console, Mobile, and Netflix Interactive</p>
+        </div>
+    </section>
+
+    <footer class="bg-black border-t-4 border-stone-800 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">ABOUT</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><a href="#" class="hover:text-white">Story Mode Wiki</a></li>
+                        <li><a href="#" class="hover:text-white">Telltale Games</a></li>
+                        <li><a href="#" class="hover:text-white">Mojang Studios</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">EPISODES</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><a href="#" class="hover:text-white">Season One</a></li>
+                        <li><a href="#" class="hover:text-white">Adventure Pass</a></li>
+                        <li><a href="#" class="hover:text-white">Season Two</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">COMMUNITY</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><a href="#" class="hover:text-white">Forums</a></li>
+                        <li><a href="#" class="hover:text-white">Fan Art</a></li>
+                        <li><a href="#" class="hover:text-white">Discord</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-yellow-400">SUPPORT</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><a href="#" class="hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-stone-800 pt-8 text-center">
+                <p class="text-xs text-gray-500 mb-2">
+                    © 2015-2025 Telltale Games and Mojang AB. Minecraft: Story Mode is a trademark of Mojang AB.
+                </p>
+                <p class="text-xs text-gray-600">
+                    This is a fan-made tribute page. All rights reserved to their respective owners.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.character-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const blocks = document.querySelectorAll('.float-block');
+            blocks.forEach((block, index) => {
+                const speed = 0.3 + (index * 0.1);
+                block.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        document.querySelectorAll('.mc-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'translateY(5px)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
